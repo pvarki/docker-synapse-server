@@ -1,0 +1,27 @@
+on:
+    pull_request:
+
+jobs:
+  test:
+    runs-on: arc-runner-set
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pre-commit
+        run: |
+          pip install pre-commit
+      - name: Do pre-commit checks
+        run: |
+          pre-commit run --all-files
+
+  docker_builds:
+    runs-on: arc-runner-set
+    needs: test
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build Synapse
+        run: |
+          docker build -t synapse:latest .

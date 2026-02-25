@@ -1,0 +1,9 @@
+# General good ideas to ignore
+.idea
+.git
+.cache
+.venv
+
+.dockerignore
+Dockerfile
+Dockerfile_build
