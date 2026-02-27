@@ -47,6 +47,12 @@ done
 export CLIENT_ID=$(jq -r '.client_id' /config/registration.json)
 export CLIENT_SECRET=$(jq -r '.client_secret' /config/registration.json)
 
+if [ "${NGINX_HTTPS_PORT}" == "443" ]; then
+  export SYNAPSE_PUBLIC_BASEURL="https://synapse.${SERVER_DOMAIN}"
+else
+  export SYNAPSE_PUBLIC_BASEURL="https://synapse.${SERVER_DOMAIN}:${NGINX_HTTPS_PORT}"
+fi
+
 if [[ ! -f "$CONFIG_FILE" ]]; then
   echo "Creating homeserver.yaml..."
   mkdir -p "$DATA_DIR"

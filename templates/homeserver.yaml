@@ -1,5 +1,5 @@
 server_name: "${SERVER_DOMAIN}"
-public_baseurl: "https://synapse.${SERVER_DOMAIN}:${NGINX_HTTPS_PORT}/"
+public_baseurl: "${SYNAPSE_PUBLIC_BASEURL}"
 pid_file: /data/homeserver.pid
 macaroon_secret_key: "${SYNAPSE_MACAROON_SECRET_KEY}"
 
@@ -9,7 +9,7 @@ listeners:
     type: http
     x_forwarded: true
     resources:
-      - names: [client, federation]
+      - names: [client]
         compress: false
   - port: 8008
     tls: false
@@ -23,20 +23,16 @@ report_stats: no
 media_store_path: /data/media_store
 
 allow_profile_lookup_over_federation: false
-
 allow_public_rooms_over_federation: false
 allow_public_rooms_without_auth: false
-
 room_prejoin_state:
   disable_default_event_types: false
-
 url_preview_enabled: false
-
-enable_room_list_search: false
-
+enable_room_list_search: true
 allow_guest_access: false
 enable_registration: false
 enable_registration_without_verification: false
+federation_domain_whitelist: []
 
 database:
   name: psycopg2
@@ -52,10 +48,6 @@ tls_certificate_path: "/data/certs/${SERVER_DOMAIN}.crt"
 tls_private_key_path: "/data/certs/${SERVER_DOMAIN}.key"
 
 password_config:
-  enabled: false
-
-#Online offline status
-presence:
   enabled: false
 
 oidc_providers:
