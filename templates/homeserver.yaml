@@ -29,6 +29,9 @@ room_prejoin_state:
   disable_default_event_types: false
 url_preview_enabled: false
 enable_room_list_search: true
+room_list_publication_rules:
+  - user_id: "*"
+    action: allow
 allow_guest_access: false
 enable_registration: false
 enable_registration_without_verification: false
@@ -43,6 +46,10 @@ database:
     host: ${POSTGRES_HOST}
     cp_min: 5
     cp_max: 10
+
+user_directory:
+  enabled: true
+  search_all_users: true
 
 tls_certificate_path: "/data/certs/${SERVER_DOMAIN}.crt"
 tls_private_key_path: "/data/certs/${SERVER_DOMAIN}.key"
