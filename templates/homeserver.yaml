@@ -33,6 +33,31 @@ room_list_publication_rules:
   - user_id: "*"
     action: allow
 allow_guest_access: false
+
+rc_joins:
+  local:
+    per_second: 10
+    burst_count: 50
+  remote:
+    per_second: 0.01
+    burst_count: 3
+  per_room:
+    per_second: 50
+    burst_count: 100
+
+rc_invites:
+  per_user:
+    per_second: 10
+    burst_count: 50
+  per_room:
+    per_second: 10
+    burst_count: 50
+
+rc_presence:
+  per_user:
+    per_second: 10
+    burst_count: 50
+
 enable_registration: false
 enable_registration_without_verification: false
 federation_domain_whitelist: []
