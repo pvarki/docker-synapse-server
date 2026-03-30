@@ -53,6 +53,8 @@ else
   export SYNAPSE_PUBLIC_BASEURL="https://synapse.${SERVER_DOMAIN}:${NGINX_HTTPS_PORT}"
 fi
 
+export DEPLOYMENT_NAME="${SERVER_DOMAIN%%.*}"
+
 if [[ ! -f "$CONFIG_FILE" ]]; then
   echo "Creating homeserver.yaml..."
   mkdir -p "$DATA_DIR"

@@ -34,6 +34,17 @@ room_list_publication_rules:
     action: allow
 allow_guest_access: false
 
+registration_shared_secret: "${SYNAPSE_REGISTRATION_SECRET}"
+
+auto_join_rooms:
+  - "#${DEPLOYMENT_NAME}-space:${SERVER_DOMAIN}"
+  - "#${DEPLOYMENT_NAME}-general:${SERVER_DOMAIN}"
+  - "#${DEPLOYMENT_NAME}-helpdesk:${SERVER_DOMAIN}"
+  - "#${DEPLOYMENT_NAME}-offtopic:${SERVER_DOMAIN}"
+autocreate_auto_join_rooms: false
+auto_join_rooms_for_guests: false
+auto_join_mxid_localpart: "${SYNAPSE_BOT_USERNAME}"
+
 rc_joins:
   local:
     per_second: 10
