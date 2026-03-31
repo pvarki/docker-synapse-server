@@ -9,18 +9,20 @@ listeners:
     type: http
     x_forwarded: true
     resources:
-      - names: [client]
+      - names: [client, federation]
         compress: false
   - port: 8008
     tls: false
     type: http
     x_forwarded: true
     resources:
-      - names: [client]
+      - names: [client, federation]
         compress: false
 
 report_stats: no
 media_store_path: /data/media_store
+max_upload_size: 50M
+max_image_pixels: 32M
 
 allow_profile_lookup_over_federation: false
 allow_public_rooms_over_federation: false
@@ -71,7 +73,11 @@ rc_presence:
 
 enable_registration: false
 enable_registration_without_verification: false
-federation_domain_whitelist: []
+
+${SYNAPSE_FEDERATION_CONFIG}
+# Never use matrix.org as a key server — avoids leaking room/user metadata to a third party.
+trusted_key_servers: []
+suppress_key_server_warning: true
 
 database:
   name: psycopg2
