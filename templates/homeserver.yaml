@@ -9,18 +9,20 @@ listeners:
     type: http
     x_forwarded: true
     resources:
-      - names: [client]
+      - names: [client, federation]
         compress: false
   - port: 8008
     tls: false
     type: http
     x_forwarded: true
     resources:
-      - names: [client]
+      - names: [client, federation]
         compress: false
 
 report_stats: no
 media_store_path: /data/media_store
+max_upload_size: 50M
+max_image_pixels: 32M
 
 allow_profile_lookup_over_federation: false
 allow_public_rooms_over_federation: false
@@ -33,9 +35,49 @@ room_list_publication_rules:
   - user_id: "*"
     action: allow
 allow_guest_access: false
+
+registration_shared_secret: "${SYNAPSE_REGISTRATION_SECRET}"
+
+auto_join_rooms:
+  - "#${DEPLOYMENT_NAME}-space:${SERVER_DOMAIN}"
+  - "#${DEPLOYMENT_NAME}-general:${SERVER_DOMAIN}"
+  - "#${DEPLOYMENT_NAME}-helpdesk:${SERVER_DOMAIN}"
+  - "#${DEPLOYMENT_NAME}-offtopic:${SERVER_DOMAIN}"
+autocreate_auto_join_rooms: false
+auto_join_rooms_for_guests: false
+auto_join_mxid_localpart: "${SYNAPSE_BOT_USERNAME}"
+
+rc_joins:
+  local:
+    per_second: 10
+    burst_count: 50
+  remote:
+    per_second: 0.01
+    burst_count: 3
+  per_room:
+    per_second: 50
+    burst_count: 100
+
+rc_invites:
+  per_user:
+    per_second: 10
+    burst_count: 50
+  per_room:
+    per_second: 10
+    burst_count: 50
+
+rc_presence:
+  per_user:
+    per_second: 10
+    burst_count: 50
+
 enable_registration: false
 enable_registration_without_verification: false
-federation_domain_whitelist: []
+
+${SYNAPSE_FEDERATION_CONFIG}
+# Never use matrix.org as a key server — avoids leaking room/user metadata to a third party.
+trusted_key_servers: []
+suppress_key_server_warning: true
 
 database:
   name: psycopg2

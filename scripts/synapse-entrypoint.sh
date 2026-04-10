@@ -53,8 +53,35 @@ else
   export SYNAPSE_PUBLIC_BASEURL="https://synapse.${SERVER_DOMAIN}:${NGINX_HTTPS_PORT}"
 fi
 
+export DEPLOYMENT_NAME="${SERVER_DOMAIN%%.*}"
+
 if [[ ! -f "$CONFIG_FILE" ]]; then
   echo "Creating homeserver.yaml..."
+
+  # Compute the federation config block injected as ${SYNAPSE_FEDERATION_CONFIG}.
+  # SYNAPSE_FEDERATION controls the mode:
+  #   *  (default) — open federation with any server
+  #   off / false / no — fully disabled
+  #   domain1.tld,domain2.tld — allowlist specific servers only
+  case "${SYNAPSE_FEDERATION:-*}" in
+    off|false|no)
+      echo "Federation: disabled"
+      export SYNAPSE_FEDERATION_CONFIG="# Federation disabled — no server-to-server traffic allowed.
+federation_domain_whitelist: []"
+      ;;
+    "*"|"")
+      echo "Federation: open (all servers)"
+      export SYNAPSE_FEDERATION_CONFIG="# Federation open — this server can communicate with any Matrix server."
+      ;;
+    *)
+      echo "Federation: allowlist — ${SYNAPSE_FEDERATION}"
+      DOMAIN_LINES=$(echo "${SYNAPSE_FEDERATION}" | tr ',' '\n' | sed 's/^[[:space:]]*/  - /' | sed 's/[[:space:]]*$//')
+      export SYNAPSE_FEDERATION_CONFIG="# Federation restricted to listed servers only.
+federation_domain_whitelist:
+${DOMAIN_LINES}"
+      ;;
+  esac
+
   mkdir -p "$DATA_DIR"
   envsubst < "$CONFIG_TEMPLATE" > "$CONFIG_FILE"
   chown -R 991:991 "$DATA_DIR"
