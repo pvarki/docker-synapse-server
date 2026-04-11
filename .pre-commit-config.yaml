@@ -26,6 +26,7 @@ repos:
     -   id: check-yaml
         exclude: "templates/.*\\.yaml"
     -   id: check-added-large-files
+        exclude: "uv\\.lock"
     -   id: check-case-conflict
     -   id: check-json
     -   id: check-merge-conflict
@@ -65,3 +66,8 @@ repos:
     hooks:
         - id: actionlint
           args: ["-shellcheck", "''"]
+-   repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.11.6
+    hooks:
+      - id: uv-lock
+      - id: uv-export
