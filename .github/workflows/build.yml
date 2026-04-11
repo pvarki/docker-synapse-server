@@ -9,6 +9,7 @@ jobs:
       - uses: actions/checkout@v5
       - name: Check version tag
         run: |
+          set +e
           curl -f https://raw.githubusercontent.com/pvarki/docker-synapse-server/main/pyproject.toml -o /tmp/main_pyproject.toml || touch /tmp/main_pyproject.toml
           grep "version = " pyproject.toml >/tmp/version.txt
           grep "version = " /tmp/main_pyproject.toml >/tmp/main_version.txt
