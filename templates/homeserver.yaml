@@ -1,3 +1,5 @@
+version: 1.0.0
+
 server_name: "${SERVER_DOMAIN}"
 public_baseurl: "${SYNAPSE_PUBLIC_BASEURL}"
 pid_file: /data/homeserver.pid
