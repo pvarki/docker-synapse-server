@@ -26,6 +26,7 @@ COPY scripts ./scripts
 COPY templates ./templates
 RUN chmod +x /opt/synapse/scripts/*.sh
 
+# FIXME: We really should not be running synapse as root
 FROM install AS run
 WORKDIR /opt/synapse
 ENTRYPOINT ["/usr/bin/tini", "--", "/opt/synapse/scripts/synapse-entrypoint.sh"]
