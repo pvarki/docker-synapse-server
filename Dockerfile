@@ -1,5 +1,5 @@
 FROM python:3.11-slim AS deps
-
+ARG SYNAPSE_VERSION=1.151.0
 # Install OS-level packages
 RUN apt-get update && apt-get install -y \
       ca-certificates \
@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
     && curl https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -o /usr/bin/wait-for-it.sh \
     && chmod a+x /usr/bin/wait-for-it.sh \
     && true
-RUN pip install --no-cache-dir authlib psycopg2-binary matrix-synapse
+RUN pip install --no-cache-dir authlib psycopg2-binary matrix-synapse==$SYNAPSE_VERSION
+# FIXME: Create a lockfile somehow that also locks the other deps
 
 WORKDIR /opt/synapse
 COPY scripts ./scripts
