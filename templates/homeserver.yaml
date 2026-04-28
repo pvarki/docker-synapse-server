@@ -1,4 +1,4 @@
-version: 1.0.0
+version: 1.0.0+260428
 
 server_name: "${SERVER_DOMAIN}"
 public_baseurl: "${SYNAPSE_PUBLIC_BASEURL}"
