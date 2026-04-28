@@ -59,3 +59,9 @@ On first startup, matrixrmapi creates a Space and four rooms scoped to the deplo
 
 All rooms use end-to-end encryption and restricted join rules (Space membership required).
 Admins promoted in Deploy App receive power level 100 and are joined to the admin channel automatically.
+
+## Versioning
+
+Versioning is handled with [bump-my-version](https://github.com/callowayproject/bump-my-version). To increment, use `bump-my-version bump <patch/minor/major>`.
+
+You can use `bump-my-version show-bump` to see how each option would affect the version.
