@@ -2,3 +2,5 @@
 .DS_Store
 ._DS_Store
 .idea
+
+.prettier_cache
