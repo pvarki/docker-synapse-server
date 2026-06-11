@@ -38,8 +38,6 @@ room_list_publication_rules:
     action: allow
 allow_guest_access: false
 
-registration_shared_secret: "${SYNAPSE_REGISTRATION_SECRET}"
-
 auto_join_rooms:
   - "#${DEPLOYMENT_NAME}-space:${SERVER_DOMAIN}"
   - "#${DEPLOYMENT_NAME}-general:${SERVER_DOMAIN}"
@@ -101,15 +99,11 @@ tls_private_key_path: "/data/certs/${SERVER_DOMAIN}.key"
 password_config:
   enabled: false
 
-oidc_providers:
-  # https://element-hq.github.io/synapse/latest/openid.html#keycloak
-  - idp_id: keycloak
-    idp_name: "Keycloak"
-    issuer: "https://${KCDOMAIN}:9443/realms/${KCREALM}"
-    client_id: "${CLIENT_ID}"
-    client_secret: "${CLIENT_SECRET}"
-    scopes: ["openid", "profile"]
-    user_mapping_provider:
-      config:
-        localpart_template: "{{ user.preferred_username }}"
-        display_name_template: "{{ user.name }}"
+# Rasenmaeher handles usernames
+enable_set_displayname: false
+
+# https://element-hq.github.io/matrix-authentication-service/setup/homeserver.html
+matrix_authentication_service:
+  enabled: true
+  endpoint: http://mas:8080
+  secret: "${MAS_SYNAPSE_SECRET}"
