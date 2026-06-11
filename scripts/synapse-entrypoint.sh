@@ -38,14 +38,6 @@ CONFIG_FILE="$DATA_DIR/homeserver.yaml"
 
 /opt/synapse/scripts/init_certs.sh
 
-OIDC_FILE="/config/registration.json"
-echo "Waiting for $OIDC_FILE to be generated..."
-until [[ -f "$OIDC_FILE" ]]; do
-  sleep 2
-done
-
-export CLIENT_ID=$(jq -r '.client_id' /config/registration.json)
-export CLIENT_SECRET=$(jq -r '.client_secret' /config/registration.json)
 
 if [ "${NGINX_HTTPS_PORT}" == "443" ]; then
   export SYNAPSE_PUBLIC_BASEURL="https://synapse.${SERVER_DOMAIN}"

@@ -49,6 +49,7 @@ repos:
           - --tab-width=2
           - --use-tabs=false
           - --cache-location=.prettier_cache
+          - --no-error-on-unmatched-pattern
         stages: [pre-commit]
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.5.5
