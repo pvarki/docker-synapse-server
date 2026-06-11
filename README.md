@@ -4,9 +4,10 @@ Matrix homeserver (Synapse) for the Deploy App integration stack.
 
 ## DNS records required
 
-Two public DNS records must point to your WAN address:
+These public DNS records must point to your WAN address:
 
 - `synapse.domain` — Matrix homeserver; Element clients connect here and federation traffic arrives here
+- `mas.domain` — Matrix Authentication Service; clients are redirected here to log in
 - `matrix.domain` — Deploy App Matrix integration UI/API (matrixrmapi)
 - `mtls.matrix.domain` — mTLS access to the matrix integration API
 
@@ -14,11 +15,11 @@ Two public DNS records must point to your WAN address:
 
 ### Required
 
-| Variable                      | Description                                                                                       |
-| ----------------------------- | ------------------------------------------------------------------------------------------------- |
-| `SYNAPSE_DATABASE_PASSWORD`   | PostgreSQL password for the `synapse` database                                                    |
-| `SYNAPSE_MACAROON_SECRET_KEY` | Secret used to sign Synapse macaroon tokens. Generate with `openssl rand -hex 32`                 |
-| `SYNAPSE_REGISTRATION_SECRET` | Shared secret used by matrixrmapi to register the admin bot. Generate with `openssl rand -hex 32` |
+| Variable                      | Description                                                                                              |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `SYNAPSE_DATABASE_PASSWORD`   | PostgreSQL password for the `synapse` database                                                           |
+| `SYNAPSE_MACAROON_SECRET_KEY` | Secret used to sign Synapse macaroon tokens. Generate with `openssl rand -hex 32`                        |
+| `MAS_SYNAPSE_SECRET`          | Shared secret between Synapse and MAS for delegated authentication. Generate with `openssl rand -hex 32` |
 
 ### Optional
 
