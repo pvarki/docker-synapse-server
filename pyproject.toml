@@ -13,4 +13,5 @@ dependencies = [
 [dependency-groups]
 dev = [
     "prek>=0.3.13",
+    "bump-my-version>=1.2,<2.0",
 ]
