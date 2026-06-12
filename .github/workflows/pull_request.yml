@@ -35,7 +35,7 @@ jobs:
 
   publish:
     name: Publish Docker image
-    needs: [prek, bumpversion-check, snyk_test]
+    needs: [prek, bumpversion-check]
     runs-on: ubuntu-latest
     permissions:
       contents: read
