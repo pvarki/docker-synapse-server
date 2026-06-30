@@ -4,8 +4,10 @@ set -euo pipefail
 # Resolve our magic names to docker internal ip
 GW_IP=$(getent ahostsv4 host.docker.internal | grep RAW | awk '{ print $1 }')
 echo "GW_IP=$GW_IP"
+KC_IP=$(getent ahostsv4 keycloak | awk '{ print $1; exit }')
+echo "KC_IP=${KC_IP:-<unresolved, using GW_IP>}"
 grep -v -F -e "localmaeher"  -- /etc/hosts >/etc/hosts.new && cat /etc/hosts.new >/etc/hosts
-echo "$GW_IP kc.localmaeher.dev.pvarki.fi" >>/etc/hosts
+echo "${KC_IP:-$GW_IP} kc.localmaeher.dev.pvarki.fi" >>/etc/hosts
 echo "*** BEGIN /etc/hosts ***"
 cat /etc/hosts
 echo "*** END /etc/hosts ***"
