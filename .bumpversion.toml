@@ -33,3 +33,10 @@ replace = 'version = "{new_version}"'
 filename = "templates/homeserver.yaml"
 search = "version: {current_version}"
 replace = "version: {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "uv.lock"
+search = '''name = "synapse-dist"
+version = "{current_version}"'''
+replace = '''name = "synapse-dist"
+version = "{new_version}"'''
