@@ -105,5 +105,5 @@ enable_set_displayname: false
 # https://element-hq.github.io/matrix-authentication-service/setup/homeserver.html
 matrix_authentication_service:
   enabled: true
-  endpoint: http://mas:8080
+  endpoint: "${MAS_ENDPOINT}"
   secret: "${MAS_SYNAPSE_SECRET}"

@@ -49,6 +49,8 @@ fi
 
 export DEPLOYMENT_NAME="${SERVER_DOMAIN%%.*}"
 
+: "${MAS_ENDPOINT:?MAS_ENDPOINT must be set}"
+
 if [[ ! -f "$CONFIG_FILE" ]]; then
   echo "Creating homeserver.yaml..."
 
