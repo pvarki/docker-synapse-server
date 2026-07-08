@@ -41,14 +41,8 @@ CONFIG_FILE="$DATA_DIR/homeserver.yaml"
 /opt/synapse/scripts/init_certs.sh
 
 
-if [ "${NGINX_HTTPS_PORT}" == "443" ]; then
-  export SYNAPSE_PUBLIC_BASEURL="https://synapse.${SERVER_DOMAIN}"
-else
-  export SYNAPSE_PUBLIC_BASEURL="https://synapse.${SERVER_DOMAIN}:${NGINX_HTTPS_PORT}"
-fi
-
-export DEPLOYMENT_NAME="${SERVER_DOMAIN%%.*}"
-
+: "${SYNAPSE_PUBLIC_BASEURL:?SYNAPSE_PUBLIC_BASEURL must be set}"
+: "${DEPLOYMENT_NAME:?DEPLOYMENT_NAME must be set}"
 : "${MAS_ENDPOINT:?MAS_ENDPOINT must be set}"
 
 if [[ ! -f "$CONFIG_FILE" ]]; then
