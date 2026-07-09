@@ -12,34 +12,12 @@ echo "*** BEGIN /etc/hosts ***"
 cat /etc/hosts
 echo "*** END /etc/hosts ***"
 
-if [[ -d "/ca_public" ]]; then
-  echo "Installing custom CAs from /ca_public into OS trust store..."
-  mkdir -p /usr/local/share/ca-certificates/
-
-  for pem in /ca_public/*.pem; do
-    [[ -f "$pem" ]] || continue
-    base=$(basename "$pem" .pem)
-    echo "  -> installing $pem as ${base}.crt"
-    cp "$pem" "/usr/local/share/ca-certificates/${base}.crt"
-  done
-
-  update-ca-certificates --fresh
-
-  echo "CA store updated."
-else
-  echo "WARNING: /ca_public directory not found."
-fi
-
-export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
-export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-
 DATA_DIR="/data"
 CERT_DIR="$DATA_DIR/certs"
 CONFIG_TEMPLATE="/opt/synapse/templates/homeserver.yaml"
 CONFIG_FILE="$DATA_DIR/homeserver.yaml"
 
 /opt/synapse/scripts/init_certs.sh
-
 
 : "${SYNAPSE_PUBLIC_BASEURL:?SYNAPSE_PUBLIC_BASEURL must be set}"
 : "${DEPLOYMENT_NAME:?DEPLOYMENT_NAME must be set}"
@@ -74,12 +52,10 @@ ${DOMAIN_LINES}"
 
   mkdir -p "$DATA_DIR"
   envsubst < "$CONFIG_TEMPLATE" > "$CONFIG_FILE"
-  chown -R 991:991 "$DATA_DIR"
-  chmod 777 "$DATA_DIR"
-  chmod 666 "$CONFIG_FILE"
+  chmod 600 "$CONFIG_FILE"
 fi
 
-wait-for-it.sh postgres:5432 --timeout=30 -- echo "Postgres is up!"
+wait-for-it.sh "${POSTGRES_HOST}:5432" --timeout=30 -- echo "Postgres is up!"
 
 echo "Starting Synapse..."
 python -m synapse.app.homeserver --config-path "$CONFIG_FILE"
