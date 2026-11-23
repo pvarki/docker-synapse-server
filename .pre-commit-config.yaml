@@ -45,6 +45,7 @@ repos:
       - id: prettier
         name: Prettier
         files: \.(yml|yaml|json|md)$
+        exclude: ^templates/homeserver\.yaml$ # in .prettierignore; prettier fails when it is the only file
         args:
           - --tab-width=2
           - --use-tabs=false
