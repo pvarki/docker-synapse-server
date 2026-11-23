@@ -1,6 +1,6 @@
 [project]
 name = "synapse-dist"
-version = "1.2.1+261027"
+version = "1.2.2+261123"
 description = "Helper package to lock deps for building Synapse container"
 readme = "README.md"
 requires-python = ">=3.11"
