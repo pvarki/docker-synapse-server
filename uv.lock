@@ -1947,7 +1947,7 @@ wheels = [
 
 [[package]]
 name = "synapse-dist"
-version = "1.2.1+261027"
+version = "1.2.2+261123"
 source = { virtual = "." }
 dependencies = [
     { name = "authlib" },
