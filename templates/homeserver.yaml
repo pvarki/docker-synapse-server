@@ -22,7 +22,9 @@ listeners:
         compress: false
 
 report_stats: no
-media_store_path: /data/media_store
+# Only /data/persistent outlives the container; this file and the certs are rebuilt from the environment.
+signing_key_path: "/data/persistent/${SERVER_DOMAIN}.signing.key"
+media_store_path: /data/persistent/media_store
 max_upload_size: 50M
 max_image_pixels: 32M
 

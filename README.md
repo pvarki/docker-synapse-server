@@ -11,6 +11,11 @@ These public DNS records must point to your WAN address:
 - `matrix.domain` — Deploy App Matrix integration UI/API (matrixrmapi)
 - `mtls.matrix.domain` — mTLS access to the matrix integration API
 
+## Volumes
+
+Mount a volume at `/data/persistent`. It holds the server's signing key and the media store. The rest of `/data`,
+`homeserver.yaml` and the TLS certificates, is rebuilt from the environment and `/le_certs` in each new container.
+
 ## Environment variables
 
 ### Required

@@ -16,7 +16,10 @@ DATA_DIR="/data"
 CERT_DIR="$DATA_DIR/certs"
 CONFIG_TEMPLATE="/opt/synapse/templates/homeserver.yaml"
 CONFIG_FILE="$DATA_DIR/homeserver.yaml"
+# The signing key and media; mount a volume here to keep them
+PERSISTENT_DIR="$DATA_DIR/persistent"
 
+mkdir -p "$PERSISTENT_DIR"
 /opt/synapse/scripts/init_certs.sh
 
 : "${SYNAPSE_PUBLIC_BASEURL:?SYNAPSE_PUBLIC_BASEURL must be set}"
